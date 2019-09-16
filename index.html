@@ -5,26 +5,96 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <style>
+        * {
+            box-sizing:border-box;
+        }
+        div.row{
+            background-color: #2196F3;
+            padding: 10px;
+           
+            
+        }
+        div.cell{
+            display: inline-block;
+            width: 6.25%;
+            text-align: center;
+            background-color: white;
+            border: 1px solid darkgrey;
+        }
+        .cellover{
+            color: blueviolet;
+        }
+            
+    
+    </style>
 </head>
 <body>
-    <div id="grid">
-
+    <button id="borrar">Reiniciar</button>
+    <div class="box">
+        <div id="grid">  </div>
     </div>
     <script>
-        const content = document.querySelector('#grid');
-        for(i=0;i<16;i++){
-            const row = document.createElement('div');
-            row.className = "row";
-            for(j=1; j<=16; j++){
-                const cell = document.createElement('div');
-                cell.className = "cell";
-                cell.innerText = (i * 16) + j;
-                content.appendChild(cell);
-            }
-            content.appendChild(row);
-        }
-       
+        
+        // Funcion Grid 
+        
+        const caja = document.querySelector('.box');
 
+        genDiv(10);
+        function genDiv(qty = 16){
+            const content = document.querySelector('#grid');
+            //genDiv qty=16;
+            for(i=0;i<qty;i++){
+                const row = document.createElement('div');
+                row.className = "row";
+                for(j=1; j<=qty; j++){
+                    const cell = document.createElement('div');
+                    cell.className = "cell";
+                    cell.innerText = (i * qty) + j;
+                    row.appendChild(cell);
+                }
+                content.appendChild(row);
+            }
+            const divs = document.querySelectorAll('.cell');
+            divs.forEach((div) => {
+                div.addEventListener('mouseover', (e) => {
+                    div.style.backgroundColor ="red";
+                    console.log(div);
+                });
+                div.addEventListener('mouseout', (e) => {
+                    div.style.backgroundColor ="white";
+                    console.log(div);
+                });
+            });
+        }
+        //funcion reiniciar
+        function reiniciar(){
+            const caja = document.querySelector('.box');
+            const elemento = document.createElement('div')
+            elemento.setAttribute('id', 'grid');
+            caja.appendChild(elemento);
+            var qty = prompt("Tamaño de la Grilla?", 16);
+            var integer = parseInt(qty, 10);
+            console.log(integer);
+            
+            genDiv(integer);
+        }
+        const btn = document.querySelector('#borrar');
+        btn.addEventListener('click', () => {
+            // Eliminando un elemento específico utilizando la propiedad parentNode, que siempre hace referencia al nodo padre de un nodo (nodoHijo.parentNode.).
+            // content var = document.getElementById("anidados");
+            const content = document.querySelector('#grid');
+            if (content.parentNode) {
+            content.parentNode.removeChild(content);
+            }
+            // var child = content.lastElementChild;
+            // while(child) {
+            //     content.removeChild(child);
+            //     child = content.lastElementChild;
+            // }
+            reiniciar();
+        });
+        
     </script>
 </body>
 </html>
